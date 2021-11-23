@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+      <h5 class="my-0 ms-md-auto font-weight-normal">
+          Remy
+      </h5>
+      <nav class="my-2 mt-md-0 ms-md-3">
+          <a class="p-2 text-dark text-decoration-none" href="/">Главная</a>
+          <a class="p-2 text-dark text-decoration-none" href="/catalog">Каталог</a>
+      </nav>
+    </div>
+    {% block content %}{% endblock %}
+
+</body>
+</html>

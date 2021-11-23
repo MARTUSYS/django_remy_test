@@ -7,7 +7,7 @@ def start(request):
     :param request:
     :return:
     """
-    return None
+    return render(request, 'main/start.html')
 
 
 def catalog(request):
@@ -16,4 +16,4 @@ def catalog(request):
     :param request:
     :return:
     """
-    return
+    return render(request, 'main/catalog.html')
