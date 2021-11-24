@@ -16,24 +16,28 @@ class Catalog(MPTTModel):
 
 class Product(models.Model):
     """
-    связанный с категорией каталога
-    Когда вы используете классы FileField или ImageField, Django предоставляет интерфейс программирования приложений
-    (API), чтобы открыть вам доступ к файлам. Этот объект – car. photo является файловым объектом, а значит имеет ряд
-    атрибутов, описанных ниже.
+    Представление продукта
     """
-    title = models.CharField('Название', max_length=255, unique=True)
-    description = models.TextField('Описание', max_length=512, default='')
     category = models.ForeignKey('Catalog', on_delete=models.PROTECT, null=True)
-    image = models.ImageField('Изображение', upload_to='image/')
 
-    # Добавить проверку '> 0' и приписку 'р'
-    price = models.IntegerField('Цена', default=99)
+    name = models.CharField('Название', max_length=255, unique=True)
+    description = models.TextField('Описание', max_length=512, default='', blank=True)
+
+    image = models.ImageField('Изображение', upload_to='image/%Y/%m/%d', blank=True)
+
+    # Добавить проверку '> 0'
+    price = models.DecimalField('Цена', max_digits=7, decimal_places=2)
+
+    stock = models.PositiveIntegerField('На складе', default=1)
+    available = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.title}. Цена: {self.price} р.'
+        return self.name
 
 
-class Basket(models.Model):
+class Cart(models.Model):
     """
     корзина \ заказ наборов товаров, изменение статусов заказов, завершение
     """
