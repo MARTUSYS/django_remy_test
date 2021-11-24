@@ -3,12 +3,12 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main.urls'))
+    path('', include('main.urls', namespace='main'))
 ]
 
 
 # urlpatterns = [
 #     path('admin/', include(admin.site.urls)),
-#     path('cart', include('cart.urls', namespace='cart')),
+#     path('cart/', include('cart.urls', namespace='cart')),
 #     path('', include('main.urls')),
 # ]
