@@ -1,14 +1,19 @@
 from django.contrib import admin
 from .models import Catalog, Product
-from mptt.admin import MPTTModelAdmin
+from mptt.admin import DraggableMPTTAdmin
+
+# Отображение каталога
+class CatalogAdmin(DraggableMPTTAdmin):
+    mptt_indent_field = 'name'
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'stock', 'available', 'created', 'updated', 'slug']
+admin.site.register(Catalog, CatalogAdmin)
+
+# Отображение продуктов
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'price', 'stock', 'available', 'created', 'updated']
     list_filter = ['available', 'created', 'updated']
     list_editable = ['price', 'stock', 'available']
-    prepopulated_fields = {'slug': ('name', 'price', 'stock')}
 
 
-admin.site.register(Catalog, MPTTModelAdmin)
-admin.site.register(Product, CategoryAdmin)
+admin.site.register(Product, ProductAdmin)

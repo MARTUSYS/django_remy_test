@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import configparser
 
@@ -30,7 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'mptt',
-    'image',
     'cart',
 ]
 
@@ -120,3 +120,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CART_SESSION_ID = 'cart'
+
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/media/'
