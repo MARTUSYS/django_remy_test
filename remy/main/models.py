@@ -1,5 +1,6 @@
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
+from django.urls import reverse
 
 
 class Catalog(MPTTModel):
@@ -10,6 +11,7 @@ class Catalog(MPTTModel):
     name = models.CharField('Название', max_length=255, unique=True, db_index=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, verbose_name="Родитель",
                             related_name='children')
+    slug = models.SlugField(max_length=200, db_index=True, unique=True)
 
     class Meta:
         ordering = ('name',)
@@ -18,6 +20,10 @@ class Catalog(MPTTModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('main:product_list_by_category',
+                       args=[self.slug])
 
 
 class Product(models.Model):
@@ -38,8 +44,15 @@ class Product(models.Model):
     created = models.DateTimeField('Дата создания', auto_now_add=True)
     updated = models.DateTimeField('Дата редактирования', auto_now=True)
 
+    slug = models.SlugField(max_length=200, db_index=True, unique=True)
+
     class Meta:
         ordering = ('name',)
+        index_together = (('id', 'slug'),)
 
     def __str__(self):
         return self.name
+
+    # def get_absolute_url(self):
+    #     return reverse('main:product_detail',
+    #                    args=[self.id, self.slug])

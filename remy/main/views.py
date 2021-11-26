@@ -11,19 +11,21 @@ def start(request):
     return render(request, 'main/product/start.html')
 
 
-def product_list(request, category_value=None):
+def product_list(request, category_slug=None):
     """
     Доработать представление класса
-    :param category_value:
+    :param category_slug: для отображение товаров экземпляра каталога и его потомков
     :param request:
     :return:
     """
     category = None
-    categories = Catalog.objects.all()  # Настроить развертывание и наследие
+    categories = Catalog.objects.all()
     products = Product.objects.filter(available=True)
-    if category_value:
-        category = get_object_or_404(Catalog, name=category_value)
-        products = products.filter(category=category)
+    if category_slug:
+        category = get_object_or_404(Catalog, slug=category_slug)
+
+        # Показ товаров данной категории и его потомков
+        products = products.filter(category__in=category.get_descendants(include_self=True))
     return render(request,
                   'main/product/catalog.html',
                   {'category': category,
