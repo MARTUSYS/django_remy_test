@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "main/base.html" %}
 
-</body>
-</html>
+{% block title %}
+    {% if category %}{{ category.title }}{% else %}Products{% endif %}
+{% endblock %}
+{% block content %}
+    <div class="product-detail">
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}None{% endif %}">
+        <h1>{{ product.name }}</h1>
+        <h2>Категория товара:
+            <a href="{{ product.category.get_absolute_url }}">{{ product.category }}
+            </a>
+        </h2>
+        <h3 class="price">Цена: {{ product.price }} р.</h3>
+        <h4 class="stock">На складе: {{ product.stock }}</h4>
+        <p>Описание: {{ product.description }}</p>
+    </div>
+{% endblock %}

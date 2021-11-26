@@ -26,18 +26,22 @@ def product_list(request, category_slug=None):
 
         # Показ товаров данной категории и его потомков
         products = products.filter(category__in=category.get_descendants(include_self=True))
+
+        # Для отображения товаров только для выбранной категории
+        # products = products.filter(category=category)
+
     return render(request,
                   'main/product/catalog.html',
                   {'category': category,
                    'categories': categories,
                    'products': products})
 
-#
-# def product_detail(request, id, slug):
-#     product = get_object_or_404(Product,
-#                                 id=id,
-#                                 slug=slug,
-#                                 available=True)
-#     return render(request,
-#                   'main/product/detail.html',
-#                   {'product': product})
+
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product,
+                                id=id,
+                                slug=slug,
+                                available=True)
+    return render(request,
+                  'main/product/detail.html',
+                  {'product': product})
