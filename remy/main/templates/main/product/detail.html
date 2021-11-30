@@ -13,6 +13,11 @@
         </h2>
         <h3 class="price">Цена: {{ product.price }} р.</h3>
         <h4 class="stock">На складе: {{ product.stock }}</h4>
+        <form action="{% url "cart:cart_add" product.id %}" method="post">
+            {{ cart_product_form }}
+            {% csrf_token %}
+            <input type="submit" value="Add to cart">
+        </form>
         <p>Описание: {{ product.description }}</p>
     </div>
 {% endblock %}

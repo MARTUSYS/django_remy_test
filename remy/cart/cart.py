@@ -1,9 +1,9 @@
 from decimal import Decimal
 from django.conf import settings
-from remy.main.models import Product
+from main.models import Product
 
 
-class Cart(object):
+class Cart:
 
     def __init__(self, request):
         """

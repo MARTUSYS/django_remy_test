@@ -7,7 +7,9 @@ app_name = 'main'
 
 urlpatterns = [
     url(r'^$', views.start),
-    url(r'^catalog$', views.product_list, name='product_list'),
+    url(r'^catalog$',
+        views.product_list,
+        name='product_list'),
     url(r'^(?P<category_slug>[-\w]+)/$',
         views.product_list,
         name='product_list_by_category'),

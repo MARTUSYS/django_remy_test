@@ -1,10 +1,8 @@
 from django.conf.urls import url
-from django.contrib import admin
-from django.urls import include
-from django.urls import path
-
 from . import views
 
+
+app_name = 'cart'
 
 urlpatterns = [
     url(r'^$', views.cart_detail, name='cart_detail'),
