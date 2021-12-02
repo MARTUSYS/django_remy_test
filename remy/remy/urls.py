@@ -6,5 +6,6 @@ from . import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^cart/', include('cart.urls', namespace='cart')),
+    url(r'^orders/', include('orders.urls', namespace='orders')),
     url(r'^', include('main.urls', namespace='main')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

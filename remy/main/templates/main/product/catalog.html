@@ -11,7 +11,7 @@
 <p></p>
     <ul>
         <li {% if not category %}class="selected"{% endif %}>
-            <a href="{% url "main:product_list" %}">All</a>
+            <a href="{% url "main:product_list" %}">Все</a>
         </li>
 
         <ul class="root">
@@ -31,7 +31,7 @@
     </ul>
 </div>
 <div id="main" class="product-list">
-    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+    <h1>{% if category %}{{ category.name }}{% else %}Продукты{% endif %}</h1>
     {% for product in products %}
         <div class="item">
             <a href="{{ product.get_absolute_url }}">
