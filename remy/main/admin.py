@@ -14,9 +14,9 @@ admin.site.register(Catalog, CatalogAdmin)
 
 # Отображение продуктов
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'stock', 'available', 'created', 'updated', 'slug']
-    list_filter = ['available', 'created', 'updated']
-    list_editable = ['price', 'stock', 'available']
+    list_display = ['name', 'price', 'discount', 'discount_activated', 'stock', 'available', 'created', 'updated', 'slug']
+    list_filter = ['discount_activated', 'available', 'created', 'updated']
+    list_editable = ['price', 'discount', 'discount_activated', 'stock', 'available']
     prepopulated_fields = {'slug': ('name', 'price')}
 
 

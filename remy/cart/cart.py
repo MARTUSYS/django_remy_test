@@ -18,8 +18,10 @@ class Cart:
 
     def add(self, product, quantity=1, update_quantity=False):
         """
-        Добавить продукт в корзину или обновить его количество.
+        Добавить продукт в корзину или обновить его количество и проверка лимита товара.
         """
+        product.price_mod()
+
         product_id = str(product.id)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
@@ -28,6 +30,10 @@ class Cart:
             self.cart[product_id]['quantity'] = quantity
         else:
             self.cart[product_id]['quantity'] += quantity
+
+        if self.cart[product_id]['quantity'] > product.stock:
+            self.cart[product_id]['quantity'] = product.stock
+
         self.save()
 
     def save(self):
@@ -55,6 +61,7 @@ class Cart:
 
         # получение объектов product и добавление их в корзину
         products = Product.objects.filter(id__in=product_ids)
+
         for product in products:
             self.cart[str(product.id)]['product'] = product
 

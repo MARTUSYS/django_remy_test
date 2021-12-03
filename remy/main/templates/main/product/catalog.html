@@ -39,7 +39,7 @@
             </a>
 
             <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
-            {{ product.price }} р.
+            {{ product.price }}р. {% if product.discount_activated %}Скидка: {{ product.discount }}%{% endif %}
         </div>
         {% endfor %}
     </div>

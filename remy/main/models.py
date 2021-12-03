@@ -30,6 +30,7 @@ class Product(models.Model):
     """
     Представление продукта
     """
+    # Про товар
     category = models.ForeignKey('Catalog', on_delete=models.PROTECT, null=True)
     name = models.CharField('Название', max_length=255, unique=True)
     description = models.TextField('Описание', max_length=512, default='', blank=True)
@@ -38,9 +39,16 @@ class Product(models.Model):
     # Добавить проверку '> 0'
     price = models.DecimalField('Цена', max_digits=7, decimal_places=2)
 
+    # Скидка
+    # Добавить проверку '> 0'
+    discount = models.DecimalField('Процент cкидки', max_digits=4, decimal_places=2, default=0)
+    discount_activated = models.BooleanField('Скидка', default=False)
+
+    # Склад
     stock = models.PositiveIntegerField('На складе', default=1)
     available = models.BooleanField('Доступно', default=True)
 
+    # Метаданные
     created = models.DateTimeField('Дата создания', auto_now_add=True)
     updated = models.DateTimeField('Дата редактирования', auto_now=True)
 
@@ -56,3 +64,9 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('main:product_detail',
                        args=[self.id, self.slug])
+
+    def price_mod(self):
+        self.price = abs(self.price)
+        # Проверка и применение скидки
+        if 0 < self.discount < 100 and self.discount_activated:
+            self.price = round(self.price * (100 - self.discount) / 100, 2)

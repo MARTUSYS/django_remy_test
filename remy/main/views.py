@@ -31,6 +31,10 @@ def product_list(request, category_slug=None):
         # Для отображения товаров только для выбранной категории
         # products = products.filter(category=category)
 
+    # Применение акции
+    for product in products:
+        product.price_mod()
+
     return render(request,
                   'main/product/catalog.html',
                   {'category': category,
@@ -44,6 +48,9 @@ def product_detail(request, id, slug):
                                 slug=slug,
                                 available=True)
     cart_product_form = CartAddProductForm()
+
+    product.price_mod()
+
     return render(request,
                   'main/product/detail.html',
                   {'product': product,
