@@ -31,8 +31,13 @@ class Cart:
         else:
             self.cart[product_id]['quantity'] += quantity
 
+        # Товар на складе
         if self.cart[product_id]['quantity'] > product.stock:
             self.cart[product_id]['quantity'] = product.stock
+
+        # Скидка кончилась или только стартавала
+        if self.cart[product_id]['price'] != str(product.price):
+            self.cart[product_id]['price'] = str(product.price)
 
         self.save()
 
